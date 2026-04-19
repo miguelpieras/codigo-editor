@@ -1,0 +1,26 @@
+{
+  "name": "codigo-editor-web",
+  "version": "0.1.0",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "npm run typecheck && npm run bundle",
+    "lint": "eslint \"Sources/codigo-editor/Web/**/*.{ts,tsx}\"",
+    "sync-assets": "node Scripts/sync-xterm-assets.cjs",
+    "typecheck": "tsc --noEmit",
+    "bundle": "esbuild Sources/codigo-editor/Web/main.ts --bundle --format=iife --target=es2020 --outfile=Sources/codigo-editor/Resources/main.js --log-level=warning"
+  },
+  "dependencies": {
+    "@mdi/js": "^7.4.47"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "@xterm/addon-fit": "^0.10.0",
+    "@xterm/xterm": "^5.5.0",
+    "eslint": "^8.57.0",
+    "typescript": "^5.6.3",
+    "esbuild": "^0.23.0"
+  }
+}
