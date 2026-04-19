@@ -1,30 +1,114 @@
 # Codigo Editor
 
-Codigo Editor is a native macOS workspace for terminal-first coding workflows. It combines a multi-pane terminal UI, local web previews, and Git/GitHub helpers into a single desktop app aimed at agent-driven development with tools like Codex, Claude Code, or your own custom shell setup.
+<p align="center">
+  <img src="Sources/codigo-editor/Resources/logo.svg" width="72" alt="Codigo Editor logo" />
+</p>
+
+<p align="center">
+  <strong>Native macOS workspace for terminal-first coding.</strong><br />
+  Run agents, terminals, previews, and Git/GitHub flows in one window.
+</p>
 
 ## Status
 
-Codigo Editor is actively developed and already usable, but it should still be treated as an evolving project. Expect the UI, settings, and integration points to keep changing as the app is opened up and hardened for broader use.
+> Already usable, still evolving. Expect the UI and settings to keep moving.
+
+## Feature Snapshot
+
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <img src="docs/images/icons/workspace.svg" width="28" alt="" />
+      <br />
+      <strong>Multi-pane workspace</strong>
+      <br />
+      <sub>Keep project tabs, terminal stacks, and previews visible together.</sub>
+    </td>
+    <td width="50%" valign="top">
+      <img src="docs/images/icons/agents.svg" width="28" alt="" />
+      <br />
+      <strong>Multiple agents</strong>
+      <br />
+      <sub>Run Codex, Claude Code, or custom launcher commands side by side.</sub>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <img src="docs/images/icons/preview.svg" width="28" alt="" />
+      <br />
+      <strong>Built-in preview</strong>
+      <br />
+      <sub>Keep localhost routes open beside the terminal work that drives them.</sub>
+    </td>
+    <td width="50%" valign="top">
+      <img src="docs/images/icons/git.svg" width="28" alt="" />
+      <br />
+      <strong>Git and GitHub helpers</strong>
+      <br />
+      <sub>Inspect changes, trigger sync flows, and hand off to your editor quickly.</sub>
+    </td>
+  </tr>
+</table>
+
+## Quick Start
+
+1. Install the latest release or run `./run-app.sh`.
+2. Pick a workspace folder.
+3. Choose your default starter command in `Codigo Editor > Settings...`.
+4. Add agents, stack terminals, and open a preview tab.
+
+## In Action
+
+The screenshots below use a sanitized demo workspace with fake project names, branches, prompts, and localhost routes.
+
+### 1. Open a workspace
+
+One window holds the project tab, terminal columns, and built-in preview.
+
+![Codigo Editor wide workspace](docs/images/workspace-hero.png)
+
+### 2. Run multiple agents
+
+Keep several Codex, Claude Code, or custom sessions live in the same project.
+
+![Codigo Editor multi-agent workspace](docs/images/multi-agent-workspace.png)
+
+### 3. Keep localhost visible
+
+Open preview tabs beside the terminal work that drives your app.
+
+![Codigo Editor roadmap preview route](docs/images/preview-roadmap.png)
+
+### 4. Stack background work
+
+Use the secondary terminal column for checks, preview logs, sync flows, or tests.
+
+![Codigo Editor terminal stack detail](docs/images/terminal-stack-detail.png)
+
+### 5. Read activity fast
+
+Tab color and timers show which projects are active and which ones are ready.
+
+![Codigo Editor tab activity detail](docs/images/tab-activity-detail.png)
+
+### 6. Switch sessions fast
+
+The agent switcher makes unread output and active sessions obvious.
+
+![Codigo Editor agent switcher detail](docs/images/agent-switcher-detail.png)
 
 ## Features
 
-- Native macOS app built with AppKit, SwiftUI, and WebKit
-- Multi-tab, multi-pane terminal layout for parallel agent or shell sessions
-- Configurable starter command for new panes (`codex`, `claude`, or any custom command)
-- Built-in preview column for local web apps and dev servers
-- Per-project command shortcuts and link shortcuts inside terminal panes
-- Git status summaries and change inspection in the app UI
-- GitHub-focused cloud actions for syncing changes or creating pull requests
-- Editor hand-off actions for Cursor, VS Code, or a custom command
-- Optional idle chime and macOS notifications when automation finishes
-- JSON-backed local configuration with XCTest coverage around persistence and terminal bootstrapping
+- Native macOS app built with AppKit, SwiftUI, WebKit, and xterm.js
+- Multi-tab, multi-pane terminal layout for agents and shell sessions
+- Configurable starter command for new panes such as `codex`, `claude`, or any custom command
+- Built-in preview tabs for local web apps and dev servers
+- Git status, change inspection, sync actions, and pull request helpers
+- Editor hand-off actions, optional notifications, and JSON-backed local settings with XCTest coverage
 
 ## Requirements
 
 - macOS 13 or newer
-
-If you are building from source, you will also need:
-
 - A Swift 6.1-compatible toolchain (`swift --version`)
 - `npm` for the bundled web UI asset pipeline
 
@@ -37,14 +121,10 @@ Optional tools:
 
 ### Install the packaged app
 
-For most users, the recommended install path is the latest GitHub Release rather than cloning the repository:
-
 1. Open the [GitHub Releases page](https://github.com/miguelpieras/codigo-editor/releases).
 2. Download the latest `CodigoEditor-<version>.dmg` or `.zip`.
 3. Move `Codigo Editor.app` into `/Applications`.
 4. Launch the app from Finder or Spotlight.
-
-The repository is the source code for the app. End users should install from Releases; cloning the repo is mainly for contributors or people who want to run development builds.
 
 ### Build from source
 
@@ -54,17 +134,11 @@ cd codigo-editor
 ./run-app.sh
 ```
 
-`./run-app.sh` is the main setup path. It will:
-
-- install JavaScript dependencies on first run if needed
-- build the TypeScript/web assets
-- compile the Swift executable
-- assemble `Codigo Editor.app`
-- launch the app unless `RUN_APP_SKIP_OPEN=1`
+`./run-app.sh` handles dependency install, web asset build, app assembly, and launch unless `RUN_APP_SKIP_OPEN=1`.
 
 By default, local packaging uses a neutral bundle identifier. If you are preparing a distributable build, set `CODIGO_BUNDLE_IDENTIFIER` to your own reverse-DNS identifier before running the packaging or release scripts.
 
-If you want the lower-level development steps instead of the packaging helper:
+Lower-level development flow:
 
 ```bash
 npm install
@@ -74,59 +148,24 @@ swift build --configuration debug
 swift test --parallel
 ```
 
-Use `./run-app.sh` when you want the packaged `.app`. Use `swift build` and `swift test` when you are working closer to the underlying executable and test suite.
+Use `./run-app.sh` for the packaged `.app`, or the commands above when you want the lower-level build and test loop.
 
 ## Updates
 
-Codigo Editor does not currently include an in-app auto-updater.
-
-The recommended update flow is:
-
-- maintainers publish each new version as a GitHub Release
-- release artifacts are generated with `./Scripts/release.sh <version> [build]`
-- users download the newest release and replace the existing `Codigo Editor.app` in `/Applications`
+- No in-app auto-updater yet.
+- Release builds update by downloading the newest GitHub Release and replacing `Codigo Editor.app`.
+- Maintainers generate release artifacts with `./Scripts/release.sh <version> [build]`.
 
 For signed or notarized releases, provide your own Apple-specific values via environment variables such as `CODIGO_BUNDLE_IDENTIFIER`, `CODIGO_CODESIGN_IDENTITY`, `CODIGO_NOTARY_TEAM_ID`, `CODIGO_NOTARY_PROFILE`, `CODIGO_NOTARY_APPLE_ID`, and `CODIGO_NOTARY_PASSWORD`.
 
-If you installed from source instead of a release build, update by pulling the latest code and rebuilding:
+If you installed from source, update with:
 
 ```bash
 git pull
 ./run-app.sh
 ```
 
-GitHub should be treated as the source host and release distribution channel, not the update mechanism by itself. The repository hosts the code, while GitHub Releases should host the signed or notarized `.dmg` and `.zip` artifacts produced by `Scripts/release.sh`.
-
-If you want automatic updates later, the next step is to integrate a macOS updater such as Sparkle and publish an appcast feed. GitHub Releases can host those assets, but GitHub alone does not make the installed app self-updating.
-
-## Quick Start
-
-1. Launch the app with `./run-app.sh` or open `Codigo Editor.app`.
-2. Choose a workspace folder when prompted.
-3. Open `Codigo Editor > Settings...` and confirm your starter command.
-4. Add terminal panes for the tasks you want to run in parallel.
-5. If you are working on a local web app, use the preview column alongside the terminal panes.
-6. Use the pane actions to open the workspace in your editor, run saved commands, inspect Git changes, or trigger GitHub-oriented actions.
-
-## Common Workflows
-
-### Agent-first terminal workspace
-
-- Set the starter command to `codex`, `claude`, or a custom launcher.
-- New panes automatically boot into that workflow.
-- Use multiple panes to run implementation, tests, and review loops side by side.
-
-### Local web development
-
-- Start your app server inside a terminal pane.
-- Keep the built-in preview visible while you work.
-- Use preview tabs when you need to compare multiple routes or surfaces.
-
-### Git and GitHub flow
-
-- Review repository changes from the pane header.
-- Choose a default cloud action: sync changes, create a pull request, or run a custom script.
-- Sign in with GitHub CLI (`gh auth login`) to enable GitHub-driven flows.
+Automatic updates would require a macOS updater such as Sparkle plus an appcast feed.
 
 ## Development
 

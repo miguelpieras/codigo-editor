@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" role="img" aria-label="Workspace icon">
+  <rect x="4" y="4" width="40" height="40" rx="12" fill="#10587A"/>
+  <rect x="11" y="14" width="10" height="20" rx="2.5" fill="#FFFFFF"/>
+  <rect x="23" y="14" width="6" height="20" rx="2" fill="#FFFFFF" opacity="0.8"/>
+  <rect x="31" y="14" width="6" height="20" rx="2" fill="#FFFFFF" opacity="0.55"/>
+</svg>
